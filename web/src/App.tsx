@@ -7,6 +7,7 @@ import { SocketResponseType } from './type/SocketResponseType';
 import JoinLobby from './components/JoinLobby';
 import Lobby from './components/Lobby';
 import Game from './components/Game';
+import "../index.css";
 
 export const socket = io(import.meta.env.VITE_SOCKET_ENDPOINT ?? '');
 
@@ -23,14 +24,15 @@ const App: React.FC = () => {
     }, []);
 
     return (
-        <div className={styles.page}>
-            <LobbyStateContext.Provider value={lobbyState}>
+        <div>
+            {/* <LobbyStateContext.Provider value={lobbyState}>
                 <GameStateContext.Provider value={gameState}>
                     {!gameState && !lobbyState && <JoinLobby />}
                     {(!gameState || gameState.isFinished) && lobbyState && <Lobby />}
                     {gameState && !gameState.isFinished && <Game />}
                 </GameStateContext.Provider>
-            </LobbyStateContext.Provider>
+            </LobbyStateContext.Provider> */}
+            <div className='text-white text-3xl'></div>
         </div>
     );
 };
