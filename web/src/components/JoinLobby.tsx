@@ -14,9 +14,15 @@ const JoinLobby: React.FC = () => {
     const [incorrectUsername, setIncorrectUsername] = useState<boolean>(false);
     const [lobbyNotFound, setLobbyNotFound] = useState<boolean>(false);
     const [gameOngoing, setGameOngoing] = useState<boolean>(false);
+    const [maxPlayers, setMaxPlayers] = useState<boolean>(false);
 
     const submit = () => {
         socket.emit(SocketRequestType.LOBBY_JOIN, username, lobbyId);
+        setGameOngoing(false);
+    };
+
+    const submitPublic = () => {
+        socket.emit(SocketRequestType.LOBBY_JOIN_PUBLIC, username);
         setGameOngoing(false);
     };
 
@@ -24,6 +30,7 @@ const JoinLobby: React.FC = () => {
         socket.on(SocketResponseType.LOBBY_ERROR_INCORRECT_USERNAME, () => setIncorrectUsername(true));
         socket.on(SocketResponseType.LOBBY_ERROR_NOT_FOUND, () => setLobbyNotFound(true));
         socket.on(SocketResponseType.LOBBY_ERROR_GAME_ONGOING, () => setGameOngoing(true));
+        socket.on(SocketResponseType.LOBBY_ERROR_MAX_PLAYERS, () => setMaxPlayers(true));
     }, []);
 
     return (
@@ -60,9 +67,18 @@ const JoinLobby: React.FC = () => {
                     </div>
                 )}
 
+                {maxPlayers && (
+                    <div className={styles.error}>
+                        Sorry, the lobby is full.
+                        <br />
+                        Try joining another lobby or create a new one!
+                    </div>
+                )}
+
                 <div className={styles.spacer} />
 
                 <Button text={lobbyId.length === 0 ? 'CREATE LOBBY' : 'JOIN'} onClick={() => submit()} />
+                <Button text={'JOIN PUBLIC'} onClick={() => submitPublic()} />
             </Container>
         </main>
     );
