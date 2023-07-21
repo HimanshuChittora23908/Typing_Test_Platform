@@ -2,6 +2,7 @@ import type { Server, Socket } from 'socket.io';
 import type { DefaultEventProps } from './types/DefaultEventProps';
 import { SocketRequestType } from './types/SocketRequestType';
 import joinLobby from './modules/lobby/events/joinLobby';
+import joinLobbyPublic from './modules/lobby/events/joinLobbyPublic';
 import leaveLobby from './modules/lobby/events/leaveLobby';
 import toggleReady from './modules/lobby/events/toggleReady';
 import switchCarEvent from './modules/lobby/events/switchCar';
@@ -14,6 +15,8 @@ const registerSocketEvents = (io: Server, socket: Socket): void => {
     socket.on(SocketRequestType.LOBBY_JOIN, (username: string, lobbyId: string | null) =>
         joinLobby(props, username, lobbyId),
     );
+
+    socket.on(SocketRequestType.LOBBY_JOIN_PUBLIC, (username: string) => joinLobbyPublic(props, username));
 
     socket.on(SocketRequestType.LOBBY_TOGGLE_READY, () => toggleReady(props));
 

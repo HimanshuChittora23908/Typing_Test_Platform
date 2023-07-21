@@ -21,6 +21,14 @@ export default (props: DefaultEventProps, username: string, lobbyId: string | nu
         return;
     }
 
+    if (lobbyId && lobbyId.length > 0) {
+        const lobby = getLobby(lobbyId);
+        if (lobby && lobby.players.length >= lobby.maxPlayers) {
+            socket.emit(SocketResponseType.LOBBY_ERROR_MAX_PLAYERS);
+            return;
+        }
+    }
+
     const lobby = getLobby(lobbyId) ?? createLobby();
     joinLobby(lobby.lobbyId, socket.id, username);
 

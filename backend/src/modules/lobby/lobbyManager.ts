@@ -30,6 +30,7 @@ export const createLobby = (): ILobby => {
         lobbyId: generateLobbyId(),
         players: [],
         typedTexts: [],
+        maxPlayers: 4,
     };
 
     lobbies.push(lobby);
@@ -69,3 +70,5 @@ export const sendLobbyUpdate = ({ io }: DefaultEventProps, lobbyId: string | nul
 
 export const getPlayerOfSocket = (socketId: string): IPlayer | null =>
     getLobby(getLobbyIdOfPlayer(socketId))?.players.find(player => player.socketId === socketId) ?? null;
+
+export const getLatestLobby = (): ILobby | null => lobbies[lobbies.length - 1] ?? null;

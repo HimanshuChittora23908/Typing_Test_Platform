@@ -7,9 +7,7 @@ const socketServer = (server: http.Server): Server => {
 
     io.on('connection', socket => {
         console.log(`[+] ${socket.id}`);
-
         registerSocketEvents(io, socket);
-
         socket.on('disconnect', () => console.log(`[-] ${socket.id}`));
     });
 

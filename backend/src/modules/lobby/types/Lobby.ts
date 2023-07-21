@@ -4,4 +4,5 @@ export interface ILobby {
     lobbyId: string;
     players: IPlayer[];
     typedTexts: number[];
+    maxPlayers: number;
 }
