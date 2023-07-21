@@ -5,12 +5,12 @@ const UserSchema = new mongoose.Schema({
         type:String,
         require:true,
         min:3,
-        max:25
+        max:25,
+        unique:true
     },
     speed:{
         type:Number,
         require:true,
-        unique:true
     }, 
     password:{
         type:String,
@@ -18,14 +18,12 @@ const UserSchema = new mongoose.Schema({
         min:3
     },
     total_contest:{
-        type:Number,
+        type:Number, 
         require:true,
-        unique:true
     }, 
     accuracy:{
         type:Number,
         require:true,
-        unique:true
     }
 },
 {timestamps:true});  
